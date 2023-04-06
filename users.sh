@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Array of usernames
-usernames=("larry" "moe" "curly" "paul")
+usernames=("larry" "moe" "curly")
 
 # Loop through usernames array
 for username in "${usernames[@]}"
