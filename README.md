@@ -4,8 +4,7 @@ This script creates local user accounts on a macOS system, prompts the user to i
 
 ## Usage
 
-1. Clone the repository: git clone https://github.com/emersunn/create-macos-users.git
-cd create-macos-users
+1. Download ##newUsersPlus.sh##
 
 2. Make the script executable:
 chmod +x create_users.sh
