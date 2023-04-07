@@ -4,7 +4,7 @@ This script creates local user accounts on a macOS system, prompts the user to i
 
 ## Usage
 
-1. Download ##newUsersPlus.sh##
+1. Download newUsersPlus.sh
 
 2. Make the script executable:
 chmod +x create_users.sh
