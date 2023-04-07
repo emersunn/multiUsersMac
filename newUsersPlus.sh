@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Initialize log file
-LOG_FILE="$HOME/create_users.log"
+LOG_FILE="/var/log/create_users.log"
 echo "$(date "+%Y-%m-%d %H:%M:%S") INFO: Starting script" >> $LOG_FILE
 
 # Loop until user enters 'done'
@@ -36,11 +36,22 @@ while true; do
   sudo dscl . -append /Groups/admin GroupMembership $username
 
   # Set profile picture
-  if [ -d "/Library/User Pictures/Flowers/" ]; then
-    picture_path="/Library/User Pictures/Flowers/$(ls /Library/User\ Pictures/Flowers | shuf -n 1)"
+  picture_dirs=("/Library/User Pictures/")
+  picture_path=""
+  for dir in "${picture_dirs[@]}"; do
+    if [ -d "$dir" ]; then
+      picture_files=($(find "$dir" -type f -iname "*.jpg" -or -iname "*.png"))
+      if [ ${#picture_files[@]} -gt 0 ]; then
+        picture_path=${picture_files[$RANDOM % ${#picture_files[@]}]}
+        break
+      fi
+    fi
+  done
+
+  if [ -n "$picture_path" ]; then
     sudo dscl . -create /Users/$username Picture "$picture_path"
   else
-    echo "$(date "+%Y-%m-%d %H:%M:%S") ERROR: Profile picture directory not found" >> $LOG_FILE
+    echo "$(date "+%Y-%m-%d %H:%M:%S") ERROR: No profile pictures found" >> $LOG_FILE
   fi
 
   # Log successful user creation
