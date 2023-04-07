@@ -1,4 +1,4 @@
-# multiUsersMac
+# multiUsersMac/newUsersPlus.sh
 
 This script creates local user accounts on a macOS system, prompts the user to input each username one at a time, generates a random password for each user, makes them an admin, sets a random profile picture, and logs successful user creations and any errors encountered.
 
