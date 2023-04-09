@@ -34,9 +34,9 @@ while true; do
 
   # Set profile picture
   picture_dir="/Library/User Pictures"
-  picture_files=($(find "$picture_dir" -type d -exec sh -c 'find "$0" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.heic" \)' {} \;))
-  if [ ${#picture_files[@]} -gt 0 ]; then
-    picture_path=${picture_files[$RANDOM % ${#picture_files[@]}]}
+  picture_files=$(find -L "$picture_dir" -type f | grep -Ei "\.(jpg|png|heic)" | xargs file | grep -i image | cut -d: -f1)
+  if [ -n "$picture_files" ]; then
+    picture_path=$(echo "$picture_files" | shuf -n1)
     sudo dscl . -create /Users/$username Picture "$picture_path"
     echo "$(date "+%Y-%m-%d %H:%M:%S") INFO: Profile picture set for user $username: $picture_path" >> $LOG_FILE
   else
