@@ -36,13 +36,17 @@ while true; do
   sudo dscl . -append /Groups/admin GroupMembership $username
 
   # Set profile picture
-  if [ -d "/Library/User Pictures/Flowers/" ]; then
-    picture_path="/Library/User Pictures/Flowers/$(ls /Library/User\ Pictures/Flowers | shuf -n 1)"
-    sudo dscl . -create /Users/$username Picture "$picture_path"
-  else
-    echo "$(date "+%Y-%m-%d %H:%M:%S") ERROR: Profile picture directory not found" >> $LOG_FILE
-  fi
-
+  picture_dirs=("/Library/User Pictures/")
+  picture_path=""
+  for dir in "${picture_dirs[@]}"; do
+    if [ -d "$dir" ]; then
+      picture_files=($(find "$dir" -type f -iname "*.jpg" -or -iname "*.png"))
+      if [ ${#picture_files[@]} -gt 0 ]; then
+        picture_path=${picture_files[$RANDOM % ${#picture_files[@]}]}
+        break
+      fi
+    fi
+  done
   # Log successful user creation
   echo "$(date "+%Y-%m-%d %H:%M:%S") INFO: User $username created successfully" >> $LOG_FILE
 done
