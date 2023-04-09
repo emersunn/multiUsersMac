@@ -20,12 +20,12 @@ while true; do
     continue
   fi
 
-  # Create user account
+  # Create user account, change PrimaryGroupID 20 to PrimaryGroupID 80 If you want to make admin accounts
   sudo dscl . -create /Users/$username
   sudo dscl . -create /Users/$username UserShell /bin/bash
   sudo dscl . -create /Users/$username RealName "$username"
   sudo dscl . -create /Users/$username UniqueID "$(($(dscl . -list /Users UniqueID | awk '{print $2}' | sort -ug | tail -1)+1))"
-  sudo dscl . -create /Users/$username PrimaryGroupID 80
+  sudo dscl . -create /Users/$username PrimaryGroupID 20
   sudo dscl . -create /Users/$username NFSHomeDirectory /Users/$username
 
   # Generate random password
