@@ -25,7 +25,7 @@ You can make admin accounts instead of standard accounts if you like. See the co
 
 ## License
 
-This script is released under the 
+[License informaition here](https://github.com/emersunn/cisco-anyconnect-duo/blob/main/LICENSE)
 
 
 
